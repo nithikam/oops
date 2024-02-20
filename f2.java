@@ -10,6 +10,8 @@ public class f2 extends JFrame implements ActionListener {
     private JButton bookPackageButton;
     private JButton checkSitesButton;
 
+    private String selectedPlace; // Store the selected place
+
     public f2() {
         super("Travel and Tourism Management");
         setLayout(new BorderLayout());
@@ -29,21 +31,28 @@ public class f2 extends JFrame implements ActionListener {
         checkSitesButton.addActionListener(this);
         add(checkSitesButton, BorderLayout.EAST);
 
-        setSize(500, 500);
+        setSize(700, 700);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == bookHotelButton) {
-            // Code to book a hotel
-            showHotelBookingDetails();
-        } else if (e.getSource() == bookPackageButton) {
-            // Code to book a package
-            showBookedDetails("Package Booking Details");
-        } else if (e.getSource() == checkSitesButton) {
-            // Code to check sites
-            showBookedDetails("Sites Checking Details");
+        if (e.getSource() == bookHotelButton || e.getSource() == bookPackageButton || e.getSource() == checkSitesButton) {
+            // Ask for a place
+            selectedPlace = JOptionPane.showInputDialog(this, "Enter a place:");
+            if (selectedPlace != null) {
+                // If a place is entered, proceed with the respective action
+                if (e.getSource() == bookHotelButton) {
+                    // Code to book a hotel
+                    showHotelBookingDetails();
+                } else if (e.getSource() == bookPackageButton) {
+                    // Code to book a package
+                    showBookedDetails("Package Booking Details");
+                } else if (e.getSource() == checkSitesButton) {
+                    // Code to check sites
+                    showBookedDetails("Sites Checking Details");
+                }
+            }
         }
     }
 
@@ -90,12 +99,9 @@ public class f2 extends JFrame implements ActionListener {
 
                 int totalAmount = numberOfDays * amountPerDay;
 
-                String details = "Hotel Booking Details:\n"
-                        + "Hotel Option: " + selectedHotel + "\n"
-                        + "Number of People: " + numberOfPeople + "\n"
-                        + "Number of Days: " + numberOfDays + "\n"
-                        + "Amount per Day: " + amountPerDay + "\n"
-                        + "Total Amount: " + totalAmount;
+                String details = "Booking Details:\n" + "Place: " + selectedPlace + "\n" +
+                        "Hotel Option: " + selectedHotel + " \t\n" + "Number of People: " + numberOfPeople + " \t\n"
+                        + "Number of Days: " + numberOfDays + " \t\n" + "Amount per Day: " + amountPerDay + " \t\n" + "Total Amount: " + totalAmount;
 
                 showBookedDetails(details);
                 hotelBookingFrame.dispose();
